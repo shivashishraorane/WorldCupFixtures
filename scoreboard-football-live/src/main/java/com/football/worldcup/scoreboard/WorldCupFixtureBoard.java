@@ -1,5 +1,7 @@
 package com.football.worldcup.scoreboard;
 
+import com.sun.istack.internal.NotNull;
+
 import java.util.concurrent.ConcurrentHashMap;
 
 public class WorldCupFixtureBoard {
@@ -27,6 +29,7 @@ public class WorldCupFixtureBoard {
     }
 
     // A synchronized method to generate a unique match ID
+    @NotNull
     private synchronized String generateMatchId() {
         return WorldCupFixtureBoard.MATCH + ++gameSequence;
     }
