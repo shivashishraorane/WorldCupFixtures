@@ -9,15 +9,15 @@ public class WorldCupFixtureBoard {
     private static ConcurrentHashMap<String, MatchInfo> scoreBoard = new ConcurrentHashMap<String, MatchInfo>();;
     private static int gameSequence = 0;
     private static final String MATCH = "Match";
-    private static final String TXT_ERROR = "Cannot create Match : ";
+    private static final String TXT_CREATE_ERROR = "Cannot create Match : ";
 
     public String createMatch(String homeTeam, String awayTeam) {
         // Input validation
         if (homeTeam == null || awayTeam == null) {
-            return TXT_ERROR+"Team names cannot be null";
+            return TXT_CREATE_ERROR+"Team names cannot be null";
         }
         else if(homeTeam==awayTeam)
-            return TXT_ERROR+"Both team names are same.";
+            return TXT_CREATE_ERROR+"Both team names are same.";
 
         // Generate unique match ID without synchronization
         String matchId = generateMatchId();
@@ -32,6 +32,10 @@ public class WorldCupFixtureBoard {
     @NotNull
     private synchronized String generateMatchId() {
         return WorldCupFixtureBoard.MATCH + ++gameSequence;
+    }
+
+    public String updateMatch(String matchID, int homeGoals, int awayGoals) {
+        return "";
     }
 }
 
