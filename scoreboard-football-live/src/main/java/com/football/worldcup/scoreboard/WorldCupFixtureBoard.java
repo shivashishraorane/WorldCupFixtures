@@ -10,6 +10,7 @@ public class WorldCupFixtureBoard {
     private static int gameSequence = 0;
     private static final String MATCH = "Match";
     private static final String TXT_CREATE_ERROR = "Cannot create Match : ";
+    private static final String TXT_UPDATE_ERROR = "Cannot update Match : ";
 
     public String createMatch(String homeTeam, String awayTeam) {
         // Input validation
@@ -35,7 +36,21 @@ public class WorldCupFixtureBoard {
     }
 
     public String updateMatch(String matchID, int homeGoals, int awayGoals) {
-        return "";
+        if(homeGoals<0 || awayGoals<0)
+            return TXT_UPDATE_ERROR+"Negative Goals cannot be scored";
+        else if(matchID == null)
+            return TXT_UPDATE_ERROR+"MatchId cannot be NULL. This match doesn't exist";
+        else
+        {
+            MatchInfo matchDetail = WorldCupFixtureBoard.scoreBoard.get(matchID);
+            if(matchDetail == null)
+                return TXT_UPDATE_ERROR+"No match details found for the associated matchId - "+matchID;
+            //updating goals for the current match
+            matchDetail.setHomeTeamScore(homeGoals);
+            matchDetail.setAwayTeamScore(awayGoals);
+            return "Hurray..!!! - Match updated Successfully for matchID - "+matchID;
+        }
+
     }
 }
 

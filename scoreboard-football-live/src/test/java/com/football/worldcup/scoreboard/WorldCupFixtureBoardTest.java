@@ -3,6 +3,7 @@ package com.football.worldcup.scoreboard;
 import org.junit.Before;
 import org.junit.Test;
 
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import org.springframework.test.util.ReflectionTestUtils;
 
@@ -66,6 +67,18 @@ public class WorldCupFixtureBoardTest {
         assertTrue(footballWorldCupScoreBoard.updateMatch("Match1",1,4).equals("Hurray..!!! - Match updated Successfully"));
     }
 
+    @Test
+    public void test_update_currentMatch_nullMatchId()
+    {
+        String result = footballWorldCupScoreBoard.updateMatch(null, 3, 4);
+        assertNotNull(result);
+    }
+
+    @Test
+    public void test_update_currentMatch_nullMatchDetail()
+    {
+        assertTrue(footballWorldCupScoreBoard.updateMatch("MissingMatchID",2,5).equals(TXT_UPDATE_ERROR+"No match details found for the associated matchId "));
+    }
 
 }
 
