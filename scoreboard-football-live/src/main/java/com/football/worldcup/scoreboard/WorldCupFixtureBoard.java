@@ -11,6 +11,7 @@ public class WorldCupFixtureBoard {
     private static final String MATCH = "Match";
     private static final String TXT_CREATE_ERROR = "Cannot create Match : ";
     private static final String TXT_UPDATE_ERROR = "Cannot update Match : ";
+    private static final String TXT_FINISH_ERROR = "Cannot end Match : ";
 
     public String createMatch(String homeTeam, String awayTeam) {
         // Input validation
@@ -54,7 +55,18 @@ public class WorldCupFixtureBoard {
     }
 
     public String finishMatch(String matchId) {
-        return "";
+        if(matchId==null)
+        {
+            return TXT_FINISH_ERROR + "MatchId cannot be NULL";
+        }
+        if (WorldCupFixtureBoard.scoreBoard.containsKey(matchId))
+        {
+            WorldCupFixtureBoard.scoreBoard.remove(matchId);
+        }
+        else
+            return TXT_FINISH_ERROR+"No MatchId found for this match.";
+        return matchId + " has been finished successfully";
     }
+
 }
 
