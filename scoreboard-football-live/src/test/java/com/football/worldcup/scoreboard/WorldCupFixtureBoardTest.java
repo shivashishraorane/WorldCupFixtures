@@ -6,7 +6,8 @@ import org.junit.Test;
 import static org.junit.Assert.assertTrue;
 import org.springframework.test.util.ReflectionTestUtils;
 
-import java.util.Hashtable;
+
+import java.util.concurrent.ConcurrentHashMap;
 
 
 public class WorldCupFixtureBoardTest {
@@ -20,7 +21,7 @@ public class WorldCupFixtureBoardTest {
         WorldCupFixtureBoardTest.footballWorldCupScoreBoard = new WorldCupFixtureBoard();
         ReflectionTestUtils.setField(WorldCupFixtureBoard.class, "gameSequence", 0);
         ReflectionTestUtils.setField(WorldCupFixtureBoard.class, "scoreBoard",
-                new Hashtable<String, MatchInfo>());
+                new ConcurrentHashMap<String, MatchInfo>());
         footballWorldCupScoreBoard.createMatch("Argentina", "France");
         footballWorldCupScoreBoard.createMatch("Croatia", "Germany");
         footballWorldCupScoreBoard.createMatch("Qatar", "Brazil");
@@ -42,7 +43,7 @@ public class WorldCupFixtureBoardTest {
     public void testCreateGame_add_new_game() {
 
         footballWorldCupScoreBoard.createMatch("Argentina", "Australia");
-        Hashtable<String, MatchInfo> scoreBoard = (Hashtable<String, MatchInfo>) ReflectionTestUtils.getField(WorldCupFixtureBoard.class,"gameSequence");
+        ConcurrentHashMap<String, MatchInfo> scoreBoard = (ConcurrentHashMap<String, MatchInfo>) ReflectionTestUtils.getField(WorldCupFixtureBoard.class,"gameSequence");
         assertTrue(scoreBoard.size() == 4);
     }
 }
