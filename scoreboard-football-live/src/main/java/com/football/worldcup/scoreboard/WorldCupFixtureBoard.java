@@ -52,5 +52,9 @@ public class WorldCupFixtureBoard {
         }
 
     }
+
+    public String finishMatch(String matchId) {
+        return "";
+    }
 }
 

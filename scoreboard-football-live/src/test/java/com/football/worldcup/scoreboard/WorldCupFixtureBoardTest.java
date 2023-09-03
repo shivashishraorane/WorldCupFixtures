@@ -3,12 +3,12 @@ package com.football.worldcup.scoreboard;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
 import org.springframework.test.util.ReflectionTestUtils;
 
 
 import java.util.concurrent.ConcurrentHashMap;
+
+import static org.junit.Assert.*;
 
 
 public class WorldCupFixtureBoardTest {
@@ -16,6 +16,7 @@ public class WorldCupFixtureBoardTest {
     public static WorldCupFixtureBoard footballWorldCupScoreBoard;
     public final static String TXT_CREATE_ERROR ="Cannot create match : ";
     public final static String TXT_UPDATE_ERROR ="Cannot update match : ";
+    public final static String TXT_FINISH_ERROR ="Cannot end match : ";
 
     @Before
     public void setUp() throws Exception {
@@ -78,6 +79,27 @@ public class WorldCupFixtureBoardTest {
     public void test_update_currentMatch_nullMatchDetail()
     {
         assertTrue(footballWorldCupScoreBoard.updateMatch("MissingMatchID",2,5).equals(TXT_UPDATE_ERROR+"No match details found for the associated matchId "));
+    }
+
+    @Test
+    public void test_finishMatch_NullMatchID()
+    {
+        assertTrue(footballWorldCupScoreBoard.finishMatch(null).equals(TXT_FINISH_ERROR+" MatchId cannot be NULL"));
+    }
+
+    @Test
+    public void test_finishMatch_NonExistent_MatchID()
+    {
+        assertTrue(footballWorldCupScoreBoard.finishMatch("MissingMatchID").equals(TXT_FINISH_ERROR+"No MatchId found for this case"));
+    }
+
+    @Test
+    public void test_finishMatch_success()
+    {
+        assertTrue(footballWorldCupScoreBoard.finishMatch("Match1").equals("Match1 has been finished successfully"));
+        //checking if the match ended for the associated matchID
+        ConcurrentHashMap<String, MatchInfo> scoreBoard = (ConcurrentHashMap<String, MatchInfo>) ReflectionTestUtils.getField(WorldCupFixtureBoard.class,"scoreBoard");
+        assertFalse(scoreBoard.containsKey("Match1"));
     }
 
 }
