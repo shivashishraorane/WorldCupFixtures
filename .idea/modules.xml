@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/WorldCupFixtures.iml" filepath="$PROJECT_DIR$/.idea/WorldCupFixtures.iml" />
+      <module fileurl="file://$PROJECT_DIR$/scoreboard-football-live/scoreboard-football-live.iml" filepath="$PROJECT_DIR$/scoreboard-football-live/scoreboard-football-live.iml" />
+    </modules>
+  </component>
+</project>
