@@ -3,6 +3,8 @@ package com.football.worldcup.scoreboard;
 import com.sun.istack.internal.NotNull;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -49,8 +51,8 @@ public class WorldCupFixtureBoard {
             if(matchDetail == null)
                 return TXT_UPDATE_ERROR+"No match details found for the associated matchId - "+matchID;
             //updating goals for the current match
-            matchDetail.setHomeTeamScore(homeGoals);
-            matchDetail.setAwayTeamScore(awayGoals);
+            matchDetail.setHomeTeamGoals(homeGoals);
+            matchDetail.setAwayTeamGoals(awayGoals);
             return "Hurray..!!! - Match updated Successfully for matchID - "+matchID;
         }
 
@@ -74,6 +76,23 @@ public class WorldCupFixtureBoard {
     {
         // Create a copy of the list to avoid modifying the original list
         List<MatchInfo> summary = new ArrayList<MatchInfo>(WorldCupFixtureBoard.scoreBoard.values());
+
+        // Sort the summary list based on total score and match order
+        Collections.sort(summary, new Comparator<MatchInfo>() {
+            public int compare(MatchInfo a, MatchInfo b) {
+                int totalGoalComparison = Integer.compare(
+                        b.getHomeTeamGoals() + b.getAwayTeamGoals(),
+                        a.getHomeTeamGoals() + a.getAwayTeamGoals()
+                );
+
+                if (totalGoalComparison == 0) {
+                    return Integer.compare(a.getGameSequence(), b.getGameSequence());
+                }
+
+                return totalGoalComparison;
+            }
+        });
+
         return summary;
     }
 }

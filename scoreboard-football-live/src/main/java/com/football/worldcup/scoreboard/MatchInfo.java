@@ -33,19 +33,19 @@ public class MatchInfo {
         this.awayTeam = awayTeam;
     }
 
-    public Integer getHomeTeamScore() {
+    public Integer getHomeTeamGoals() {
         return homeTeamGoals;
     }
 
-    public void setHomeTeamScore(Integer homeTeamGoals) {
+    public void setHomeTeamGoals(Integer homeTeamGoals) {
         this.homeTeamGoals = homeTeamGoals;
     }
 
-    public Integer getAwayTeamScore() {
+    public Integer getAwayTeamGoals() {
         return awayTeamGoals;
     }
 
-    public void setAwayTeamScore(Integer awayTeamGoals) {
+    public void setAwayTeamGoals(Integer awayTeamGoals) {
         this.awayTeamGoals = awayTeamGoals;
     }
 
