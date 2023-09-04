@@ -1,11 +1,13 @@
 package com.football.worldcup.scoreboard;
 
+import com.sun.org.apache.xerces.internal.impl.xpath.regex.Match;
 import org.junit.Before;
 import org.junit.Test;
 
 import org.springframework.test.util.ReflectionTestUtils;
 
 
+import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
 import static org.junit.Assert.*;
@@ -17,7 +19,7 @@ public class WorldCupFixtureBoardTest {
     public final static String TXT_CREATE_ERROR ="Cannot create match : ";
     public final static String TXT_UPDATE_ERROR ="Cannot update match : ";
     public final static String TXT_FINISH_ERROR ="Cannot end match : ";
-
+    public final static String TXT_SUMMARY_ERROR ="Cannot get summary";
     @Before
     public void setUp() throws Exception {
 
@@ -101,6 +103,31 @@ public class WorldCupFixtureBoardTest {
         ConcurrentHashMap<String, MatchInfo> scoreBoard = (ConcurrentHashMap<String, MatchInfo>) ReflectionTestUtils.getField(WorldCupFixtureBoard.class,"scoreBoard");
         assertFalse(scoreBoard.containsKey("Match1"));
     }
+    @Test
+    public void test_getSummary_initialState() {
+        // Gets the summary of matches when no update was made (showing initial scores (0,0))
+        List<MatchInfo> summary = footballWorldCupScoreBoard.getSummary();
 
+        // Check the order of matches in the initial state(order check can be set as per requirement)
+        assertEquals("Match1", summary.get(0).getGameSequence());
+        assertEquals("Match2", summary.get(1).getGameSequence());
+        assertEquals("Match3", summary.get(2).getGameSequence());
+        assertEquals("Match4", summary.get(3).getGameSequence());
+    }
+
+    @Test
+    public void test_getSummary_updatedGoalsState() {
+        // Update the score of "Match1" to 4-3
+        footballWorldCupScoreBoard.updateMatch("Match3", 4, 3);
+
+        // Get the summary of matches after goals are updated to it.
+        List<MatchInfo> summary = footballWorldCupScoreBoard.getSummary();
+
+        //Check the order of matches after the score update based on game order (order can be set as per requirement).
+        assertEquals("Match3", summary.get(0).getGameSequence());
+        assertEquals("Match4", summary.get(1).getGameSequence());
+        assertEquals("Match2", summary.get(2).getGameSequence());
+        assertEquals("Match1", summary.get(3).getGameSequence());
+    }
 }
 

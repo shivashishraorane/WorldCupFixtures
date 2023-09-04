@@ -2,6 +2,8 @@ package com.football.worldcup.scoreboard;
 
 import com.sun.istack.internal.NotNull;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class WorldCupFixtureBoard {
@@ -68,5 +70,11 @@ public class WorldCupFixtureBoard {
         return matchId + " has been finished successfully";
     }
 
+    public List<MatchInfo> getSummary()
+    {
+        // Create a copy of the list to avoid modifying the original list
+        List<MatchInfo> summary = new ArrayList<MatchInfo>(WorldCupFixtureBoard.scoreBoard.values());
+        return summary;
+    }
 }
 
