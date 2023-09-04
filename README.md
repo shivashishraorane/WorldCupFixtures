@@ -14,7 +14,10 @@ End an ongoing match.
 
 View a summary of matches sorted by game order or game sequence.  
 
+# Tech Stack
 
+Java  
+Junit  
 
 # Usage
 
@@ -33,6 +36,8 @@ View a summary of matches sorted by game order or game sequence.
 		getSummary() - method to get the summary for the matches from initial State (when match just started and goals were (0,0)) and from updated scores (after any changes in goals).  
 		
 
+# Extras
 
+1.) WorldCupFixtureBoardTest - It conatins all the test cases for this application.
 
 
